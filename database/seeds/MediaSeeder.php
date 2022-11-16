@@ -2,35 +2,21 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class MediaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-      $media = [
-        [
-          'name' => 'Vero Moda Casual',
-          'url' => '/uploads/vero-moda-1.jpg'
-        ],
-        [
-          'name' => 'Jennyfer Casual',
-          'url' => '/uploads/Jennyfer-Casual-1.jpg'
-        ],
-        [
-          'name' => 'Юбкa H&M Casual',
-          'url' => '/uploads/Юбкa-H-M-Casual-1.jpg'
-        ],
-        [
-          'name' => 'Top Shop Casual ',
-          'url' => '/uploads/Top-Shop-Casual-1.jpg'
-        ],
-      ];
+  /**
+   * Run the database seeds.
+   *
+   * @return void
+   */
+  public function run()
+  {
+    $path = public_path();
+    $files = File::allFiles($path);
 
-      DB::table('media')->insert($media);
-    }
+    dd($files);
+    DB::table('media')->insert($media);
+  }
 }
