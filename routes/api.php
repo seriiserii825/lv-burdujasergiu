@@ -39,6 +39,7 @@ Route::group([
     'category' => 'Admin\CategoryController',
     'attribute' => 'Admin\AttributeController',
     'attribute-value' => 'Admin\AttributeValueController',
+    'post-category' => 'Admin\PostCategoryController',
   ]);
   Route::get('admin', 'Admin\AdminController@index');
   Route::get('user-get-all', 'Admin\UserController@getAll');
@@ -49,13 +50,13 @@ Route::get('login', 'AuthController@index')->name('login');
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
-Route::get('attribute', 'Front\AttributeFrontController@index');
-Route::get('category', 'Front\CategoryFrontController@index');
-Route::get('last-products', 'Front\ProductFrontController@lastProducts');
-Route::post('filter-products', 'Front\ProductFrontController@index');
-Route::post('related-products', 'Front\ProductFrontController@relatedProducts');
-Route::get('single-product/{id}', 'Front\ProductFrontController@show');
-Route::post('create-order', 'Front\OrderFrontController@store');
-Route::get('get-order/{id}', 'Front\OrderFrontController@getOrder');
+/* Route::get('attribute', 'Front\AttributeFrontController@index'); */
+/* Route::get('category', 'Front\CategoryFrontController@index'); */
+/* Route::get('last-products', 'Front\ProductFrontController@lastProducts'); */
+/* Route::post('filter-products', 'Front\ProductFrontController@index'); */
+/* Route::post('related-products', 'Front\ProductFrontController@relatedProducts'); */
+/* Route::get('single-product/{id}', 'Front\ProductFrontController@show'); */
+/* Route::post('create-order', 'Front\OrderFrontController@store'); */
+/* Route::get('get-order/{id}', 'Front\OrderFrontController@getOrder'); */
 
 
