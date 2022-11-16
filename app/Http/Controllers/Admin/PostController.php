@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PostCategoryRequest;
-use App\PostCategory;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdatePostCategoryRequest;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Resources\PostResource;
+use App\Post;
+use Illuminate\Http\Request;
 
-class PostCategoryController extends Controller
+class PostController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -17,7 +17,8 @@ class PostCategoryController extends Controller
    */
   public function index()
   {
-    return PostCategory::all();
+    $posts = PostResource::collection(Post::all());
+    return response()->json($posts);
   }
 
   /**
@@ -36,12 +37,12 @@ class PostCategoryController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(PostCategoryRequest $request)
+  public function store(StorePostRequest $request)
   {
-    PostCategory::create($request->all());
+    Post::create($request->all());
     return response()->json([
-      'message' => 'Post category created successfully',
-    ]);
+      'message' => 'Post created successfully',
+    ], 201);
   }
 
   /**
@@ -52,8 +53,7 @@ class PostCategoryController extends Controller
    */
   public function show($id)
   {
-    $postCategory = PostCategory::find($id);
-    return $postCategory;
+    //
   }
 
   /**
@@ -64,8 +64,7 @@ class PostCategoryController extends Controller
    */
   public function edit($id)
   {
-    $postCategory = PostCategory::findOrFail($id);
-    return $postCategory;
+    //
   }
 
   /**
@@ -75,13 +74,9 @@ class PostCategoryController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(UpdatePostCategoryRequest $request, $id)
+  public function update(Request $request, $id)
   {
-    $postCategory = PostCategory::findOrFail($id);
-    $postCategory->update($request->all());
-    return response()->json([
-      'message' => 'Post category updated successfully',
-    ]);
+    //
   }
 
   /**
@@ -92,10 +87,6 @@ class PostCategoryController extends Controller
    */
   public function destroy($id)
   {
-    $postCategory = PostCategory::findOrFail($id);
-    $postCategory->delete();
-    return response()->json([
-      'message' => 'Post category deleted successfully',
-    ]);
+    //
   }
 }
