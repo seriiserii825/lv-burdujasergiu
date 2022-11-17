@@ -13,10 +13,10 @@ class MediaSeeder extends Seeder
    */
   public function run()
   {
-    $path = public_path();
-    $files = File::allFiles($path);
+    /* $path = public_path(); */
+    /* $files = File::allFiles($path); */
 
-    dd($files);
-    DB::table('media')->insert($media);
+    /* dd($files); */
+    /* DB::table('media')->insert($media); */
   }
 }
