@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Post;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class PostController extends Controller
    */
   public function show($id)
   {
-    //
+    return new PostResource(Post::find($id));
   }
 
   /**
@@ -76,9 +77,13 @@ class PostController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UpdatePostRequest $request, $id)
   {
-    //
+    $post = Post::find($id);
+    $post->update($request->validated());
+    return response()->json([
+      'message' => 'Post updated successfully',
+    ]);
   }
 
   /**
