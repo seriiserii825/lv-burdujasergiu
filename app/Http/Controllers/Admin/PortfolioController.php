@@ -18,7 +18,7 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-      return PortfolioResource::collection(Portfolio::all());
+      return PortfolioResource::collection(Portfolio::query()->orderBy('id', 'desc')->get());
     }
 
     /**
