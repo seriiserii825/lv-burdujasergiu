@@ -18,7 +18,7 @@ class PostController extends Controller
    */
   public function index()
   {
-    $posts = PostResource::collection(Post::all());
+    $posts = PostResource::collection(Post::query()->orderBy('updated_at', 'desc')->get());
     return response()->json([
       'data' => $posts,
     ]);
