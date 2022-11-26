@@ -55,3 +55,4 @@ Route::post('register', 'AuthController@register');
 
 Route::get('post-category', 'PostCategoryController@index');
 Route::get('post', 'PostController@index');
+Route::get('post/{slug}', 'PostController@show');

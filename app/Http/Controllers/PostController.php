@@ -20,7 +20,7 @@ class PostController extends Controller
       $query = $query->where('post_category_id', '=', $request->post_category_id);
     }
 
-    if(isset($s) && $s !== "") {
+    if (isset($s) && $s !== "") {
       $query = $query->where('title', 'like', '%' . $s . '%');
     }
 
@@ -32,5 +32,10 @@ class PostController extends Controller
         'total' => $query->count()
       ]
     );
+  }
+
+  public function show($slug)
+  {
+    return new PostResource(Post::query()->where('slug', '=', $slug)->first());
   }
 }
