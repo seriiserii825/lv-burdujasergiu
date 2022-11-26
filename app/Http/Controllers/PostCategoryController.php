@@ -9,6 +9,9 @@ class PostCategoryController extends Controller
 {
   public function index()
   {
-    return PostCategory::all();
+    return PostCategory::query()
+      ->has('posts')
+      ->orderBy('title')
+      ->get();
   }
 }

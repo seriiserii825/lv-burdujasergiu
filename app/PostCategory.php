@@ -11,4 +11,9 @@ class PostCategory extends Model
     'image',
     'status',
   ];
+
+  public function posts()
+  {
+    return $this->hasMany(Post::class);
+  }
 }
