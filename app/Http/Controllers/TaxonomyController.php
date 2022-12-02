@@ -10,6 +10,6 @@ class TaxonomyController extends Controller
 {
   public function index()
   {
-    return TaxonomyResource::collection(Taxonomy::all());
+    return TaxonomyResource::collection(Taxonomy::query()->has('portfolios')->get());
   }
 }
