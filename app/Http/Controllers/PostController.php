@@ -28,8 +28,8 @@ class PostController extends Controller
 
     return response()->json(
       [
-        'data' => $result,
-        'total' => $query->count()
+        'total' => $query->count(),
+        'data' => $result
       ]
     );
   }
