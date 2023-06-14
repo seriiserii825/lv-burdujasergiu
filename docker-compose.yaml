@@ -4,6 +4,7 @@ version: '3.1'
 services:
   #Nginx Service
   nginx:
+    container_name: nginx_burduja
     build:
       context: .
       dockerfile: docker/nginx.docker
@@ -19,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    container_name: php
+    container_name: php_burduja
     restart: unless-stopped
     tty: true
     working_dir: /var/www
@@ -32,7 +33,7 @@ services:
   mysql:
     image: mysql:8
     restart: always
-    container_name: mysql
+    container_name: mysql_burduja
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
     volumes:
