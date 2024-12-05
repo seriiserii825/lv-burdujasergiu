@@ -2,25 +2,23 @@
 version: '3.1'
 
 services:
-  #Nginx Service
   nginx:
-    container_name: nginx_burduja
+    container_name: nginx_burdujasergiu
     build:
       context: .
       dockerfile: docker/nginx.docker
     volumes:
       - ./:/var/www
-      - ./docker/nginx/ssl:/etc/nginx/ssl
     ports:
-      - "8088:443"
+      - "8080:80"
     links:
       - php-fpm
 
   php-fpm:
+    container_name: php_burdujasergiu
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    container_name: php_burduja
     restart: unless-stopped
     tty: true
     working_dir: /var/www
@@ -28,15 +26,45 @@ services:
       - ./:/var/www
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     links:
-      - mysql
+      - mariadb
+    depends_on:
+      - mariadb
 
-  mysql:
-    image: mysql:8
+  mariadb:
+    container_name: mariadb_burdujasergiu
+    image: mariadb:11.0.3  # Replace with the desired MariaDB version
     restart: always
-    container_name: mysql_burduja
     environment:
-      - "MYSQL_ROOT_PASSWORD=root"
+      MYSQL_ROOT_PASSWORD: root       # Root password
+      MYSQL_DATABASE: burdujasergiu        # Database name
     volumes:
       - "./docker/mysql:/var/lib/mysql"
+      - "./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf"
     ports:
       - "33062:3306"
+    command: --default-authentication-plugin=mysql_native_password
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_burdujasergiu
+    restart: always
+    ports:
+     - '8084:80'
+    environment:
+      MAX_EXECUTION_TIME: 600
+      UPLOAD_LIMIT: 800M
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: root # server mysql, user root, password root
+    depends_on:
+     - mariadb
+
+  # node:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/node/node.docker
+  #   container_name: node
+  #   volumes:
+  #     - ./:/var/www
+  #   tty: true
