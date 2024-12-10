@@ -53,6 +53,7 @@ Route::get('login', 'AuthController@index')->name('login');
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
+Route::get('home', 'HomeController@index');
 Route::get('post-category', 'PostCategoryController@index');
 Route::get('post', 'PostController@index');
 Route::get('post/{slug}', 'PostController@show');
