@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PortfolioResource;
 use App\Http\Resources\PostResource;
 use App\Post;
 use Illuminate\Http\Request;
@@ -12,9 +13,12 @@ class HomeController extends Controller
     {
         $query = Post::query();
         $posts = PostResource::collection($query->offset(0)->orderBy('updated_at')->limit(5)->get());
+
+        $portfolios = PortfolioResource::collection($query->limit(5)->get());
         return response()->json(
             [
-                'posts' => $posts
+                'posts' => $posts,
+                'portfolios' => $portfolios
             ]
         );
     }
