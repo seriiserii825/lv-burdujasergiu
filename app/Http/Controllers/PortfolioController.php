@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PortfolioResource;
+use App\Http\Resources\TaxonomyResource;
 use App\Portfolio;
+use App\Taxonomy;
 use Illuminate\Http\Request;
 
 class PortfolioController extends Controller
@@ -30,13 +32,15 @@ class PortfolioController extends Controller
     }
 
     $result = PortfolioResource::collection($query->get());
+    $taxonomies = TaxonomyResource::collection(Taxonomy::all());
 
     return response()->json(
       [
         'total' => $query->count(),
         'offset' => $offset,
         'limit' => $limit,
-        'data' => $result
+        'data' => $result,
+        'taxonomies' => $taxonomies
       ]
     );
   }
