@@ -20,7 +20,9 @@ class PortfolioController extends Controller
       $query = $query->where('taxonomy_id', '=', $request->taxonomy_id);
     }
 
-    $query = $query->offset($offset)->limit($limit);
+    if (isset($request->offset) && isset($request->limit)) {
+      $query = $query->offset($offset)->limit($limit);
+    }
 
 
     if (isset($s) && $s !== "") {
