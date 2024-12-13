@@ -60,6 +60,7 @@ Route::get('post/{slug}', 'PostController@show');
 
 Route::get('taxonomy', 'TaxonomyController@index');
 Route::get('portfolio', 'PortfolioController@index');
+Route::get('portfolio-filter', 'PortfolioController@filter');
 Route::get('portfolio/{slug}', 'PortfolioController@show');
 
 
