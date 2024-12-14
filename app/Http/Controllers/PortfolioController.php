@@ -10,54 +10,60 @@ use Illuminate\Http\Request;
 
 class PortfolioController extends Controller
 {
-  public function index()
-  {
-    $query = Portfolio::query();
-    $result = PortfolioResource::collection($query->get());
-    $taxonomies = TaxonomyResource::collection(Taxonomy::all());
+    public function index(Request $request)
+    {
+        $query = Portfolio::query();
+        $limit = $request->limit;
+        $offset = $request->offset;
+        if (isset($request->limit) && isset($request->offset)) {
+            $query = $query->limit($limit)->offset($offset);
+        }
+        $result = PortfolioResource::collection($query->get());
+        $taxonomies = TaxonomyResource::collection(Taxonomy::all());
 
-    return response()->json(
-      [
-        'total' => $query->count(),
-        'data' => $result,
-        'taxonomies' => $taxonomies
-      ]
-    );
-  }
-
-  public function filter(Request $request)
-  {
-    $query = Portfolio::query();
-    $limit = $request->limit;
-    $offset = $request->offset;
-    $s = $request->search;
-
-    if (isset($request->taxonomy_id) && $request->taxonomy_id !== "0") {
-      $query = $query->where('taxonomy_id', '=', $request->taxonomy_id);
+        return response()->json(
+            [
+                'total' => $query->count(),
+                'data' => $result,
+                'taxonomies' => $taxonomies
+            ]
+        );
     }
 
-    if (isset($request->offset) && isset($request->limit)) {
-      $query = $query->offset($offset)->limit($limit);
+    public function filter(Request $request)
+    {
+        $query = Portfolio::query();
+        $limit = $request->limit;
+        $offset = $request->offset;
+        $s = $request->search;
+
+        if (isset($request->taxonomy_id) && $request->taxonomy_id !== "0") {
+            $query = $query->where('taxonomy_id', '=', $request->taxonomy_id);
+        }
+
+        if (isset($request->offset) && isset($request->limit)) {
+            $query = $query->offset($offset)->limit($limit);
+        }
+
+        if (isset($s) && $s !== "") {
+            $query = $query->where('title', 'like', '%' . $s . '%');
+        }
+
+        $result = PortfolioResource::collection($query->get());
+
+        return response()->json(
+            [
+                'query' => $query,
+                'total' => $query->count(),
+                'offset' => $offset,
+                'limit' => $limit,
+                'data' => $result,
+            ]
+        );
     }
 
-    if (isset($s) && $s !== "") {
-      $query = $query->where('title', 'like', '%' . $s . '%');
+    public function show($slug)
+    {
+        return new PortfolioResource(Portfolio::query()->where('slug', '=', $slug)->first());
     }
-
-    $result = PortfolioResource::collection($query->get());
-
-    return response()->json(
-      [
-        'total' => $query->count(),
-        'offset' => $offset,
-        'limit' => $limit,
-        'data' => $result,
-      ]
-    );
-  }
-
-  public function show($slug)
-  {
-    return new PortfolioResource(Portfolio::query()->where('slug', '=', $slug)->first());
-  }
 }
